@@ -21,6 +21,7 @@ html {
       position: fixed;
       width: 100%;
       top: 0;
+      z-index: 15;
     }
 
     footer {
@@ -41,7 +42,7 @@ html {
       right: 0;
       top: 0;
       height: 0;
-      width: 12px;
+      width: 10px;
       background-color: #ff4800;
       z-index: 9999;
     }
@@ -120,6 +121,7 @@ html {
     -ms-border-radius: 6px;
     -o-border-radius: 6px;
     border-radius: 6px;
+    position: relative;
 
     .task {
       display: flex;
@@ -160,6 +162,16 @@ html {
         -ms-border-radius: 4px;
         -o-border-radius: 4px;
         border-radius: 4px;
+
+        &.complete {
+          position: absolute;
+          right: 30px;
+        }
+
+        &.delete {
+          position: absolute;
+          right: 100px;
+        }
       }
 
       &.done {

@@ -5,7 +5,6 @@ let submit = document.querySelector("input[type='submit']");
 let tasks = document.querySelector(".tasks");
 let localArray = [];
 
-tasks.addEventListener("click", deleteTask);
 submit.addEventListener("click", addTask);
 
 if (localStorage.tasks) {
@@ -18,12 +17,16 @@ if (localStorage.tasks) {
     }
     task.id = ele.id;
     task.innerHTML = ele.title;
-    // task.setAttribute("data-id", ele.id);
 
     let span = document.createElement("span");
     span.classList.add("delete");
     span.innerHTML = `Delete`;
 
+    let complete = document.createElement("span");
+    complete.classList.add("complete");
+    complete.innerHTML = `Complete`;
+
+    task.appendChild(complete);
     task.appendChild(span);
     tasks.appendChild(task);
   });
@@ -50,24 +53,28 @@ function addLocalStorage() {
   };
   localArray.push(obj);
 }
-console.log(localArray);
 
-function deleteTask(event) {
-  if (
-    event.target.parentElement.className === "tasks" ||
-    event.target.className === "tasks"
-  ) {
-    event.preventDefault();
-  } else {
-    event.target.parentElement.remove();
-    deleteLocalStorage(event);
+document.addEventListener("click", (event) => {
+  if (event.target.matches("span.complete")) {
+    event.target.parentElement.classList.toggle("done");
+    toggleStatus(event.target.parentElement.id);
   }
+});
 
-  if (event.target.classList.contains("task")) {
-    event.target.classList.toggle("done");
-    toggleStatus(event.target.id);
-  }
-}
+let del = document.querySelectorAll("span.delete");
+del.forEach((ele) => {
+  ele.addEventListener("click", (event) => {
+    if (
+      event.target.parentElement.className === "tasks" ||
+      event.target.className === "tasks"
+    ) {
+      event.preventDefault();
+    } else {
+      event.target.parentElement.remove();
+      deleteLocalStorage(event);
+    }
+  });
+});
 
 function deleteLocalStorage(event) {
   let newLocalArray = [];
