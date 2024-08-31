@@ -16,7 +16,7 @@ Check out the live version of the To-Do List [here](https://gzixnine.github.io/T
 ## 🛠️ How It Works
 
 1. **Add Tasks**: Simply type your task in the input field and hit "Add" to include it in your list.
-2. **Mark as Completed**: Click on a task to mark it as done, or click again to unmark it.
+2. **Mark as Completed**: Click the "Complete" button next to each task to mark it as done, or click it again to unmark it.
 3. **Delete Tasks**: Use the delete button next to each task to remove it from your list.
 4. **Persistent Storage**: Your tasks are saved automatically, so you can close and return anytime without losing your data.
 
