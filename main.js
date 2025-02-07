@@ -1,11 +1,45 @@
 /** @format */
 
 let input = document.querySelector("input[type='text']");
+let description = document.querySelector("textarea");
 let submit = document.querySelector("input[type='submit']");
 let tasks = document.querySelector(".tasks");
+let bodyTasks = document.querySelector(".body-tasks");
+let completeAllBtn = document.querySelector(
+  "#CompleteTaskButton[value='Complete All']"
+);
+let deleteAllBtn = document.querySelector(
+  "#DeleteTaskButton[value='Delete All']"
+);
 let localArray = [];
 
+// 🎨 Array of 20 colors
+const colors = [
+  "red",
+  "blue",
+  "green",
+  "purple",
+  "orange",
+  "pink",
+  "yellow",
+  "brown",
+  "teal",
+  "gray",
+  "cyan",
+  "magenta",
+  "lime",
+  "indigo",
+  "gold",
+  "coral",
+  "maroon",
+  "navy",
+  "olive",
+  "turquoise",
+];
+
 submit.addEventListener("click", addTask);
+completeAllBtn.addEventListener("click", completeAllTasks);
+deleteAllBtn.addEventListener("click", deleteAllTasks);
 
 // ! Load tasks from localStorage and display them
 if (localStorage.tasks) {
@@ -16,14 +50,27 @@ if (localStorage.tasks) {
 // ! Function to display tasks
 function displayTasks() {
   tasks.innerHTML = "";
+
+  if (localArray.length > 0) {
+    bodyTasks.style.display = "block"; // Show the task container
+  } else {
+    bodyTasks.style.display = "none"; // Hide when no tasks
+  }
+
   localArray.forEach(function (ele) {
     let task = document.createElement("div");
-    task.classList.add("task");
+    task.classList.add("task", ele.color); // Add color class
     if (ele.completed) {
-      task.className = "task done";
+      task.classList.add("done");
     }
     task.id = ele.id;
-    task.innerHTML = ele.title;
+
+    let title = document.createElement("h3");
+    title.innerText = ele.title;
+
+    let desc = document.createElement("p");
+    desc.classList.add("description");
+    desc.innerText = ele.description || ""; // Handle empty description
 
     let complete = document.createElement("span");
     complete.classList.add("complete");
@@ -33,6 +80,8 @@ function displayTasks() {
     span.classList.add("delete");
     span.innerHTML = `Delete`;
 
+    task.appendChild(title);
+    if (ele.description) task.appendChild(desc); // Add only if there's a description
     task.appendChild(complete);
     task.appendChild(span);
     tasks.appendChild(task);
@@ -42,18 +91,24 @@ function displayTasks() {
 function addTask(event) {
   event.preventDefault();
   if (input.value !== "") {
+    // Description is optional
     addLocalStorage();
     localStorage.setItem("tasks", JSON.stringify(localArray));
     displayTasks();
     input.value = "";
+    description.value = "";
   }
 }
 
 function addLocalStorage() {
+  let randomColor = colors[Math.floor(Math.random() * colors.length)]; // Pick random color
+
   let obj = {
     id: Date.now(),
     title: input.value,
+    description: description.value || "", // Ensure empty string if no description
     completed: false,
+    color: randomColor, // Store color in local storage
   };
   localArray.unshift(obj);
 }
@@ -91,12 +146,16 @@ function toggleStatus(taskId) {
   displayTasks();
 }
 
-// ! Making a Scroll Bar in the right instead Scroll Bar
-let el = document.querySelector(".scroller");
-let height =
-  document.documentElement.scrollHeight - document.documentElement.clientHeight;
+// ! Complete All Tasks
+function completeAllTasks() {
+  localArray.forEach((task) => (task.completed = true));
+  localStorage.setItem("tasks", JSON.stringify(localArray));
+  displayTasks();
+}
 
-window.addEventListener("scroll", () => {
-  let scrollTop = document.documentElement.scrollTop;
-  el.style.height = `${(scrollTop / height) * 100}%`;
-});
+// ! Delete All Tasks
+function deleteAllTasks() {
+  localArray = [];
+  localStorage.removeItem("tasks");
+  displayTasks();
+}

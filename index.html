@@ -5,6 +5,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>To Do List</title>
+
+  <!-- ! Meta Tags -->
+  <meta name="description"
+    content="A simple and efficient To-Do List application to manage tasks, stay productive, and keep track of daily goals.">
+  <meta name="keywords" content="To-Do List, Task Manager, Productivity App, Daily Planner, Task Organizer">
+  <meta name="author" content="Ahmed Allam">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="To-Do List | Stay Organized & Productive">
+  <meta property="og:description" content="A simple and efficient To-Do List app to manage tasks and stay on track.">
+
   <!-- ! Page Title Icon -->
   <link rel="icon" href="icon.svg">
   <!-- ! Main Template CSS File -->
@@ -18,15 +28,21 @@
 
 <body>
   <h1>To Do List</h1>
-  <div class="scroller"></div>
   <div class="container" id="mainContainer">
     <div class="form" id="taskForm">
-      <input type="text" class="input" id="taskInput">
+      <input type="text" class="input" id="taskInput" placeholder="Task Title">
       <input type="submit" class="add" id="addTaskButton" value="Add Task">
+      <textarea name="Description" id="" placeholder="Task Description"></textarea>
     </div>
-    <div class="tasks" id="tasksContainer"></div>
+    <div class="body-tasks">
+      <div class="header">
+        <input type="submit" class="Complete" id="CompleteTaskButton" value="Complete All">
+        <input type="submit" class="Delete" id="DeleteTaskButton" value="Delete All">
+      </div>
+      <div class="tasks" id="tasksContainer"></div>
+    </div>
   </div>
-  <footer>Made By Allam 🤍</footer>
+  <footer>Made By <a href="https://github.com/GziXnine" target="_blank">Allam</a> 🤍</footer>
   <script src="main.js"></script>
 </body>
 
