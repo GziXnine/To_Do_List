@@ -161,6 +161,7 @@ html {
       cursor: pointer;
       border: 2px solid #cccccc50;
       border-radius: 16px;
+      background-color: white;
       position: relative;
       transition: 0.3s;
       padding-bottom: 40px;
